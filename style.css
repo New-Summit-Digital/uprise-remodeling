@@ -2448,6 +2448,8 @@ textarea:focus-visible {
 ═══════════════════════════════════════════════════════════════ */
 .mega-parent {
   position: static;
+  padding: 16px 0;
+  margin: -16px 0;
 }
 
 .mega-trigger {
@@ -2483,6 +2485,16 @@ textarea:focus-visible {
   z-index: 1001;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   pointer-events: none;
+}
+
+/* Invisible bridge between nav link and panel to maintain hover */
+.mega-panel::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
 }
 
 .mega-parent:hover .mega-panel {
