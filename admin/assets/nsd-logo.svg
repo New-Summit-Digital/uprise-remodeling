@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" fill="none">
+  <rect x="0" y="0" width="40" height="40" rx="8" fill="#e8a735"/>
+  <text x="20" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="20" fill="#0f2440">NSD</text>
+  <text x="50" y="18" font-family="Arial, sans-serif" font-weight="700" font-size="14" fill="#ffffff">New Summit</text>
+  <text x="50" y="33" font-family="Arial, sans-serif" font-weight="400" font-size="12" fill="#adb5bd">Digital</text>
+</svg>

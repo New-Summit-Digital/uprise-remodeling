@@ -1,1 +1,5 @@
 .wrangler/
+node_modules/
+package.json
+package-lock.json
+*.docx

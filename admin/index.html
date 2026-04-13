@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Uprise Remodeling — New Summit Digital</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-page">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="assets/nsd-logo.svg" alt="New Summit Digital" class="sidebar-logo">
+      <span class="sidebar-title">Uprise Remodeling</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="overview">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Overview
+      </a>
+      <a href="#" class="nav-item" data-section="content">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Content Editor
+      </a>
+      <a href="#" class="nav-item" data-section="blog">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Blog Manager
+      </a>
+      <a href="#" class="nav-item" data-section="media">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Media Library
+      </a>
+      <a href="#" class="nav-item" data-section="leads">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Leads
+      </a>
+      <a href="#" class="nav-item" data-section="reviews">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Reviews
+      </a>
+      <a href="#" class="nav-item" data-section="analytics">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Analytics
+      </a>
+      <div class="nav-divider"></div>
+      <p class="nav-label">Automation</p>
+      <a href="#" class="nav-item" data-section="calendar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Content Calendar
+      </a>
+      <a href="#" class="nav-item" data-section="approval">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Approval Queue
+      </a>
+      <a href="#" class="nav-item" data-section="platforms">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Connected Platforms
+      </a>
+      <div class="nav-divider"></div>
+      <a href="#" class="nav-item" data-section="settings">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </a>
+      <a href="#" class="nav-item" data-section="users">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Users
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <span id="user-name">Loading...</span>
+        <span id="user-role" class="role-badge">Agency</span>
+      </div>
+      <button id="logout-btn" class="btn-logout">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="topbar">
+      <button id="menu-toggle" class="menu-toggle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h2 id="page-title">Overview</h2>
+      <div class="topbar-actions">
+        <span class="powered-by">Managed by <strong>New Summit Digital</strong></span>
+      </div>
+    </header>
+
+    <!-- Overview Section -->
+    <section id="section-overview" class="dashboard-section active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon leads-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-leads">0</span>
+            <span class="stat-label">New Leads</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon views-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-views">—</span>
+            <span class="stat-label">Page Views (30d)</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon posts-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-posts">0</span>
+            <span class="stat-label">Blog Posts</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon reviews-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-reviews">0</span>
+            <span class="stat-label">Reviews</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card">
+          <h3>Recent Leads</h3>
+          <div id="recent-leads" class="card-body">
+            <p class="empty-state">No leads yet. Leads from your website forms will appear here.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Upcoming Content</h3>
+          <div id="upcoming-content" class="card-body">
+            <p class="empty-state">No scheduled content yet. Set up automation to get started.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Recent Activity</h3>
+          <div id="recent-activity" class="card-body">
+            <p class="empty-state">No activity yet.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Site Status</h3>
+          <div id="site-status" class="card-body">
+            <div class="status-row">
+              <span>Website</span>
+              <span class="status-badge status-up" id="uptime-status">Checking...</span>
+            </div>
+            <div class="status-row">
+              <span>Automation</span>
+              <span class="status-badge status-pending" id="automation-status">Not configured</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Editor Section -->
+    <section id="section-content" class="dashboard-section">
+      <div class="section-header">
+        <h3>Content Editor</h3>
+        <p>Edit page content directly. Changes are saved as drafts until you publish.</p>
+      </div>
+      <div class="page-list" id="page-list">
+        <p class="empty-state">Loading pages...</p>
+      </div>
+    </section>
+
+    <!-- Blog Manager Section -->
+    <section id="section-blog" class="dashboard-section">
+      <div class="section-header">
+        <h3>Blog Manager</h3>
+        <button class="btn-primary" id="new-post-btn">+ New Post</button>
+      </div>
+      <div class="filter-bar">
+        <select id="blog-status-filter">
+          <option value="all">All Status</option>
+          <option value="draft">Draft</option>
+          <option value="scheduled">Scheduled</option>
+          <option value="published">Published</option>
+        </select>
+      </div>
+      <div id="blog-list" class="blog-list">
+        <p class="empty-state">No blog posts yet. Click "+ New Post" to create one.</p>
+      </div>
+    </section>
+
+    <!-- Media Library Section -->
+    <section id="section-media" class="dashboard-section">
+      <div class="section-header">
+        <h3>Media Library</h3>
+        <button class="btn-primary" id="upload-media-btn">+ Upload</button>
+      </div>
+      <div class="filter-bar">
+        <select id="media-type-filter">
+          <option value="all">All Media</option>
+          <option value="image">Images</option>
+          <option value="video">Videos</option>
+        </select>
+        <select id="media-folder-filter">
+          <option value="all">All Folders</option>
+          <option value="hero">Hero</option>
+          <option value="services">Services</option>
+          <option value="blog">Blog</option>
+          <option value="social">Social</option>
+          <option value="team">Team</option>
+        </select>
+      </div>
+      <div id="media-grid" class="media-grid">
+        <p class="empty-state">No media uploaded yet.</p>
+      </div>
+    </section>
+
+    <!-- Leads Section -->
+    <section id="section-leads" class="dashboard-section">
+      <div class="section-header">
+        <h3>Lead Management</h3>
+        <button class="btn-secondary" id="export-leads-btn">Export CSV</button>
+      </div>
+      <div class="filter-bar">
+        <select id="lead-status-filter">
+          <option value="all">All Status</option>
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="converted">Converted</option>
+          <option value="closed">Closed</option>
+        </select>
+      </div>
+      <div id="leads-table-container">
+        <table class="data-table" id="leads-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Source</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="leads-tbody">
+            <tr><td colspan="7" class="empty-state">No leads yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="section-reviews" class="dashboard-section">
+      <div class="section-header">
+        <h3>Review Manager</h3>
+        <button class="btn-primary" id="add-review-btn">+ Add Review</button>
+      </div>
+      <div id="reviews-list" class="reviews-list">
+        <p class="empty-state">No reviews yet. Add them manually or connect Google Business Profile.</p>
+      </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="section-analytics" class="dashboard-section">
+      <div class="section-header">
+        <h3>Analytics</h3>
+        <select id="analytics-range">
+          <option value="7">Last 7 days</option>
+          <option value="30" selected>Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-info"><span class="stat-value" id="analytics-visitors">—</span><span class="stat-label">Visitors</span></div></div>
+        <div class="stat-card"><div class="stat-info"><span class="stat-value" id="analytics-pageviews">—</span><span class="stat-label">Page Views</span></div></div>
+        <div class="stat-card"><div class="stat-info"><span class="stat-value" id="analytics-bounce">—</span><span class="stat-label">Bounce Rate</span></div></div>
+        <div class="stat-card"><div class="stat-info"><span class="stat-value" id="analytics-duration">—</span><span class="stat-label">Avg Session</span></div></div>
+      </div>
+      <div class="card">
+        <h3>Traffic Overview</h3>
+        <p class="empty-state">Connect Google Analytics (GA4) in Settings to see traffic data.</p>
+      </div>
+    </section>
+
+    <!-- Content Calendar Section -->
+    <section id="section-calendar" class="dashboard-section">
+      <div class="section-header">
+        <h3>Content Calendar</h3>
+        <div class="calendar-nav">
+          <button class="btn-icon" id="cal-prev">&larr;</button>
+          <span id="cal-month">April 2026</span>
+          <button class="btn-icon" id="cal-next">&rarr;</button>
+        </div>
+      </div>
+      <div id="calendar-grid" class="calendar-grid">
+        <p class="empty-state">Enable automation in Settings to populate the content calendar.</p>
+      </div>
+    </section>
+
+    <!-- Approval Queue Section -->
+    <section id="section-approval" class="dashboard-section">
+      <div class="section-header">
+        <h3>Approval Queue</h3>
+        <button class="btn-primary" id="approve-all-btn">Approve All</button>
+      </div>
+      <div id="approval-list" class="approval-list">
+        <p class="empty-state">No content pending approval.</p>
+      </div>
+    </section>
+
+    <!-- Connected Platforms Section -->
+    <section id="section-platforms" class="dashboard-section">
+      <div class="section-header">
+        <h3>Connected Platforms</h3>
+      </div>
+      <div class="platforms-grid">
+        <div class="platform-card">
+          <div class="platform-icon">f</div>
+          <div class="platform-info">
+            <strong>Facebook</strong>
+            <span class="status-badge status-disconnected">Not connected</span>
+          </div>
+          <button class="btn-secondary btn-connect" data-platform="facebook">Connect</button>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon">ig</div>
+          <div class="platform-info">
+            <strong>Instagram</strong>
+            <span class="status-badge status-disconnected">Not connected</span>
+          </div>
+          <button class="btn-secondary btn-connect" data-platform="instagram">Connect</button>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon">G</div>
+          <div class="platform-info">
+            <strong>Google Business Profile</strong>
+            <span class="status-badge status-disconnected">Not connected</span>
+          </div>
+          <button class="btn-secondary btn-connect" data-platform="gbp">Connect</button>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon">in</div>
+          <div class="platform-info">
+            <strong>LinkedIn</strong>
+            <span class="status-badge status-disconnected">Not connected</span>
+          </div>
+          <button class="btn-secondary btn-connect" data-platform="linkedin">Connect</button>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon">X</div>
+          <div class="platform-info">
+            <strong>X (Twitter)</strong>
+            <span class="status-badge status-disconnected">Not connected</span>
+          </div>
+          <button class="btn-secondary btn-connect" data-platform="x">Connect</button>
+        </div>
+        <div class="platform-card">
+          <div class="platform-icon">tt</div>
+          <div class="platform-info">
+            <strong>TikTok</strong>
+            <span class="status-badge status-disconnected">Not connected</span>
+          </div>
+          <button class="btn-secondary btn-connect" data-platform="tiktok">Connect</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings Section -->
+    <section id="section-settings" class="dashboard-section">
+      <div class="section-header">
+        <h3>Settings</h3>
+      </div>
+      <div class="settings-tabs">
+        <button class="tab-btn active" data-tab="site">Site Info</button>
+        <button class="tab-btn" data-tab="brand">Brand</button>
+        <button class="tab-btn" data-tab="automation">Automation</button>
+        <button class="tab-btn" data-tab="notifications">Notifications</button>
+      </div>
+      <div class="settings-content">
+        <div id="tab-site" class="tab-panel active">
+          <form id="site-settings-form" class="settings-form">
+            <div class="form-group"><label>Business Name</label><input type="text" id="set-biz-name" value="Uprise Remodeling"></div>
+            <div class="form-group"><label>Phone</label><input type="tel" id="set-biz-phone" value="(913) 562-7804"></div>
+            <div class="form-group"><label>Email</label><input type="email" id="set-biz-email" value="info@upriseremodeling.com"></div>
+            <div class="form-group"><label>Address</label><input type="text" id="set-biz-address" value="Lenexa, KS 66215"></div>
+            <div class="form-group"><label>Hours</label><input type="text" id="set-biz-hours" value="Mon-Fri 8AM-6PM, Sat 9AM-2PM"></div>
+            <button type="submit" class="btn-primary">Save Changes</button>
+          </form>
+        </div>
+        <div id="tab-brand" class="tab-panel">
+          <form id="brand-settings-form" class="settings-form">
+            <div class="form-row">
+              <div class="form-group"><label>Primary Color</label><input type="color" id="set-primary" value="#1a3a5c"></div>
+              <div class="form-group"><label>Accent Color</label><input type="color" id="set-accent" value="#e8a735"></div>
+            </div>
+            <div class="form-group"><label>Logo</label><input type="file" id="set-logo" accept="image/*"></div>
+            <button type="submit" class="btn-primary">Save Brand</button>
+          </form>
+        </div>
+        <div id="tab-automation" class="tab-panel">
+          <form id="automation-settings-form" class="settings-form">
+            <div class="form-group">
+              <label>Approval Mode</label>
+              <select id="set-approval-mode">
+                <option value="agency_approval" selected>Agency Approval Required</option>
+                <option value="client_configurable">Client Configurable</option>
+                <option value="auto_pilot">Full Auto-Pilot</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Blog Posts Per Month</label>
+              <select id="set-blog-freq">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="4" selected>4</option>
+                <option value="8">8</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Trending Topics</label>
+              <label class="checkbox-label"><input type="checkbox" id="set-trending" checked> Auto-discover trending topics</label>
+            </div>
+            <div class="form-group">
+              <label>Seasonal Content</label>
+              <label class="checkbox-label"><input type="checkbox" id="set-seasonal" checked> Generate seasonal/holiday content</label>
+            </div>
+            <button type="submit" class="btn-primary">Save Automation Settings</button>
+          </form>
+        </div>
+        <div id="tab-notifications" class="tab-panel">
+          <form id="notification-settings-form" class="settings-form">
+            <div class="form-group">
+              <label>New Lead Notification</label>
+              <label class="checkbox-label"><input type="checkbox" id="set-lead-notify" checked> Email me when a new lead comes in</label>
+            </div>
+            <div class="form-group"><label>Notification Email</label><input type="email" id="set-notify-email" value="liz@bucherdigital.io"></div>
+            <button type="submit" class="btn-primary">Save Notifications</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Users Section -->
+    <section id="section-users" class="dashboard-section">
+      <div class="section-header">
+        <h3>User Management</h3>
+        <button class="btn-primary" id="invite-user-btn">+ Invite User</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Last Login</th></tr></thead>
+        <tbody id="users-tbody">
+          <tr><td colspan="4" class="empty-state">Loading users...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay" hidden>
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Modal</h3>
+        <button class="modal-close" id="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
