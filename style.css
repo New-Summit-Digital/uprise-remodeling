@@ -574,7 +574,7 @@ textarea:focus-visible {
   font-size: 11px !important;
   color: var(--white) !important;
   background: var(--teal);
-  padding: 16px 40px;
+  padding: 16px 40px !important;
   border-radius: var(--radius-sm);
   letter-spacing: 0.1em;
   transition: background 0.3s var(--ease-out), transform 0.3s var(--ease-out) !important;
