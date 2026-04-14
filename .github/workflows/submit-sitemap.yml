@@ -1,0 +1,29 @@
+name: Submit sitemap to Google Search Console
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'sitemap.xml'
+      - '**.html'
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: pip install google-auth requests
+
+      - name: Submit sitemap
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          SITE_URL: https://www.upriseremodeling.com/
+          SITEMAP_URL: https://www.upriseremodeling.com/sitemap.xml
+        run: python scripts/submit-sitemap.py
