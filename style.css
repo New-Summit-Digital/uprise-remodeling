@@ -1461,7 +1461,8 @@ textarea:focus-visible {
    17. BEFORE / AFTER SLIDER
 ═══════════════════════════════════════════════════════════════ */
 .ba-slider-container {
-  margin-bottom: 48px;
+  max-width: 900px;
+  margin: 0 auto 48px;
 }
 
 .ba-slider-label {
