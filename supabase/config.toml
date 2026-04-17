@@ -394,3 +394,58 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 # declarative_schema_path = "./declarative"
 # JSON string passed through to pg-delta SQL formatting.
 # format_options = "{\"keywordCase\":\"upper\",\"indent\":2,\"maxWidth\":80,\"commaStyle\":\"trailing\"}"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Edge Function verify_jwt overrides
+# ═══════════════════════════════════════════════════════════════════════════
+# Functions called by pg_cron OR directly from the admin UI browser need
+# verify_jwt = false. They enforce auth internally via CRON_SECRET header or
+# supabase.auth.getUser() check. See Skill 4 rule #7.
+
+[functions.publish-social-posts]
+verify_jwt = false
+
+[functions.publish-watchdog]
+verify_jwt = false
+
+[functions.smoke-test-socials]
+verify_jwt = false
+
+[functions.notify-editor]
+verify_jwt = false
+
+[functions.meta-token-exchange]
+verify_jwt = false
+
+[functions.sync-google-reviews]
+verify_jwt = false
+
+[functions.google-oauth-callback]
+verify_jwt = false
+
+[functions.google-reviews-callback]
+verify_jwt = false
+
+[functions.google-business-setup]
+verify_jwt = false
+
+[functions.google-discover-locations]
+verify_jwt = false
+
+[functions.gsc-search-analytics]
+verify_jwt = false
+
+[functions.generate-blog]
+verify_jwt = false
+
+[functions.generate-social]
+verify_jwt = false
+
+[functions.generate-ai-photo]
+verify_jwt = false
+
+[functions.keyword-research]
+verify_jwt = false
+
+[functions.optimize-image]
+verify_jwt = false
