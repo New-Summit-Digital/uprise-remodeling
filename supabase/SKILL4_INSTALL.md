@@ -1,136 +1,194 @@
-# Summit Skill 4 — Content Automation Install Guide (Uprise)
+# Summit Skill 4 — Deploy the Automation Pipeline for Uprise
 
-This repo is **scaffolded** with the new Skill 4 content automation pipeline but NOT deployed yet. Nothing here is running against Supabase until you follow the steps below.
-
-**Do not worry — the live site is unaffected.** These files sit in the repo waiting until you explicitly deploy them.
+Follow these 6 steps in order. Budget ~30 minutes if you have all the API keys ready.
 
 ---
 
-## What was installed (Apr 17, 2026)
+## Step 1 — Collect API keys (do this FIRST, before terminal)
 
-### 16 edge functions (18 total including existing GSC function)
-New / from Skill 4 reference:
-- `publish-social-posts` — posts to FB/IG/LinkedIn/GBP WITH IMAGE ATTACHED (replaces old buggy `publish-social`)
-- `publish-watchdog` — hourly cron, emails you if posts get stuck
-- `smoke-test-socials` — weekly cron, proactively tests the publish pipeline
-- `notify-editor` — sends "new content ready for review" emails via Resend
-- `meta-token-exchange` — refreshes Facebook/Instagram tokens
-- `sync-google-reviews` — pulls latest reviews from Google Business Profile
-- `google-business-setup`, `google-discover-locations`, `google-oauth-callback`, `google-reviews-callback` — OAuth flows for GBP
-- `keyword-research` — Firecrawl + Gemini keyword discovery for remodeling topics
-- `generate-ai-photo` — Gemini-primary / FAL-fallback image generation (no-text enforced)
-- `optimize-image` — WebP/AVIF conversion + compression
+Open accounts + copy keys into a notes doc:
 
-Kept from Uprise's original build:
-- `generate-blog`, `generate-social` — remodeling-tailored generators (unchanged)
-- `gsc-search-analytics` — Search Console data for admin dashboard
+| Key | Where to get it | Required for |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | https://console.anthropic.com/settings/keys | Text generation |
+| `GOOGLE_API_KEY` | https://aistudio.google.com/apikey | Image generation (Gemini) |
+| `FAL_API_KEY` | https://fal.ai/dashboard/keys | Image fallback + video |
+| `FIRECRAWL_API_KEY` | https://firecrawl.dev/app/api-keys | Keyword research |
+| `RESEND_API_KEY` | https://resend.com/api-keys | Email notifications |
+| `CRON_SECRET` | Generate: run `openssl rand -hex 32` in terminal | Cron auth |
 
-Removed (replaced or BDD-specific):
-- `publish-social` → replaced by `publish-social-posts`
-- `content-scheduler` → replaced by cron jobs in `20260417000003_cron_jobs.sql`
-
-### 2 migration SQL files
-- `20260417000001_publish_attempts_and_smoke_flag.sql` — safeguard schema
-- `20260417000003_cron_jobs.sql` — 6 cron schedules
-
-### 4 helper scripts in `/scripts`
-- `predeploy-check.py` — verifies `verify_jwt = false` on all cron-called functions
-- `queue-test-post.py` — queues a smoke-test post
-- `check-test-post.py` — verifies the test post published
-- `ig-autodiscover.py` — auto-detects Instagram Business Account from Meta token
-
-### `config.toml` updates
-Added `verify_jwt = false` for 16 functions (see Skill 4 rule #7 — prevents the silent cron-401 bug that broke BDD for 2 days).
+**Don't skip any** — functions that miss a secret will silently fail when triggered.
 
 ---
 
-## Before you deploy — prerequisites
+## Step 2 — Enable auto-recharge on paid APIs
 
-### ⚠️ Schema prerequisite
-The new edge functions expect these tables, which **do NOT exist in Uprise's current Supabase schema**:
-- `social_media_posts` (Uprise has `generated_social_posts` — different name)
-- `ai_generated_photos` (Uprise has `generated_media` — different name)
-- `platform_credentials` (Uprise has `social_accounts` — different name)
-- `media_library`
-- `form_email_log`
-- `image_optimization_logs`
-- `admin_whitelist`
-- `user_roles` + `app_role` type + `has_role()` function
-
-**Deploying without creating these tables WILL cause runtime errors.**
-
-Two paths forward:
-
-**Path A — Defer deployment:** Leave this scaffolding in the repo until you're ready to actually launch automation. Nothing breaks.
-
-**Path B — Deploy now:** Requires a prep session to create the schema. Rough plan:
-1. Extract the generic table definitions from the reference `bdd-production-schema.sql` (skipping dog-specific tables)
-2. Write an Uprise-specific base schema migration
-3. Apply it to Supabase
-4. Then run the steps below
+Prevents mid-month outages embarrassing the agency:
+- Anthropic: https://console.anthropic.com/settings/billing → Auto-recharge ON
+- FAL: https://fal.ai/dashboard/billing → Auto-recharge ON
+- Resend is free tier for now
 
 ---
 
-## Deployment steps (when ready)
+## Step 3 — Apply migrations to Supabase
 
-### 1. Set Supabase secrets
+The repo has 2 new migration files that create the base schema + safeguards:
+
 ```bash
+cd "/Users/elizabeth/Library/CloudStorage/GoogleDrive-liz@bucherdigital.io/Shared drives/New Summit Digital/GITHUB WEBSITE REPOS LOCAL/uprise-remodeling"
+
 supabase link --project-ref pmxrjlxfppjpwnrpqmjj
-supabase secrets set ANTHROPIC_API_KEY="sk-ant-..."
-supabase secrets set GOOGLE_API_KEY="..."           # for Gemini image generation
-supabase secrets set FAL_API_KEY="..."              # image fallback + video
-supabase secrets set FIRECRAWL_API_KEY="..."        # keyword research
-supabase secrets set RESEND_API_KEY="re_..."        # notifications
-supabase secrets set CRON_SECRET="$(openssl rand -hex 32)"
-```
+# Enter DB password when prompted
 
-### 2. Apply migrations
-```bash
-# After the base schema prerequisites are done:
 supabase db push
 ```
 
-### 3. Run predeploy check
+This runs (in order):
+1. `20260417000000_skill4_base_schema.sql` — creates app_role, has_role(), admin_whitelist, ai_generated_photos, social_media_posts, platform_credentials, media_library, form_email_log, image_optimization_logs, newsletter_subscribers, user_roles (12 tables + policies)
+2. `20260417000001_publish_attempts_and_smoke_flag.sql` — adds publish_attempts table + is_smoke_test column
+
+All statements are idempotent (IF NOT EXISTS) so re-running is safe.
+
+**Verify:** Open the Supabase Table Editor and confirm these tables exist: `ai_generated_photos`, `social_media_posts`, `platform_credentials`, `publish_attempts`, `admin_whitelist`.
+
+---
+
+## Step 4 — Set Supabase secrets
+
+From the same terminal:
+
 ```bash
-python3 scripts/predeploy-check.py
-# Must exit 0 before deploying functions
+supabase secrets set ANTHROPIC_API_KEY="paste-here"
+supabase secrets set GOOGLE_API_KEY="paste-here"
+supabase secrets set FAL_API_KEY="paste-here"
+supabase secrets set FIRECRAWL_API_KEY="paste-here"
+supabase secrets set RESEND_API_KEY="paste-here"
+supabase secrets set CRON_SECRET="$(openssl rand -hex 32)"
 ```
 
-### 4. Deploy all edge functions
+Save the CRON_SECRET value — you need it in Step 6.
+
+---
+
+## Step 5 — Deploy edge functions
+
 ```bash
+# Pre-deploy safety check (verifies verify_jwt=false on all cron functions)
+python3 scripts/predeploy-check.py
+# Must exit with "OK" — fix any missing config.toml entries before continuing
+
+# Deploy all 18 functions in one shot
 for fn in publish-social-posts publish-watchdog smoke-test-socials notify-editor \
           meta-token-exchange sync-google-reviews google-business-setup \
           google-discover-locations google-oauth-callback google-reviews-callback \
-          keyword-research generate-ai-photo optimize-image; do
+          keyword-research generate-ai-photo optimize-image \
+          generate-blog generate-social gsc-search-analytics; do
+  echo ">>> deploying $fn"
   supabase functions deploy "$fn"
 done
 ```
 
-### 5. Apply cron jobs
-Open `supabase/migrations/20260417000003_cron_jobs.sql`, replace `PASTE_CRON_SECRET_HERE` with the CRON_SECRET value from step 1, then paste into Supabase SQL editor and run.
+This takes ~3-5 minutes. Watch for any failures.
 
-### 6. Smoke test end-to-end
-```bash
-python3 scripts/queue-test-post.py
-# Wait 15 minutes for the cron to fire
-python3 scripts/check-test-post.py <post-uuid>
+---
+
+## Step 6 — Install cron jobs
+
+1. Open `supabase/cron-jobs-MANUAL.sql` in your editor
+2. Replace `PASTE_CRON_SECRET_HERE` with the CRON_SECRET value from Step 4
+3. Open Supabase SQL Editor: https://supabase.com/dashboard/project/pmxrjlxfppjpwnrpqmjj/sql/new
+4. Paste the entire file contents and click **Run**
+
+This installs 6 crons:
+- `publish-social-posts` every 15 min (publishes scheduled posts)
+- `auto-generate-monthly-posts` on the 25th at 6am UTC (generates next month)
+- `publish-watchdog` hourly at :05 (alerts on stuck posts)
+- `smoke-test-socials` weekly Mondays 6am UTC (pipeline health check)
+- `trending-scanner` and `performance-tracker` (monthly)
+
+Verify via: `SELECT * FROM cron.job;` in SQL editor.
+
+---
+
+## Step 7 — Seed admin_whitelist
+
+Add yourself (and any editor emails) so the notify-editor function has someone to email:
+
+```sql
+-- Run in Supabase SQL Editor
+INSERT INTO public.admin_whitelist (email, role)
+VALUES ('liz@bucherdigital.io', 'admin')
+ON CONFLICT (email) DO NOTHING;
+
+-- Add editor(s) if applicable:
+-- INSERT INTO public.admin_whitelist (email, role)
+-- VALUES ('jorge@upriseremodeling.com', 'editor')
+-- ON CONFLICT (email) DO NOTHING;
 ```
 
 ---
 
-## What's NOT included
+## Step 8 — Connect social platforms
 
-- **Niche-specific `auto-tag-image` function** — BDD version was dog-photo-specific. Uprise would need a remodeling photo tagger. Deferred.
-- **Niche-specific `auto-generate-monthly-posts`** — BDD version had puppy-specific content mix. Uprise would need a remodeling content mix. Deferred.
-- **Niche-specific `bulk-generate-posts`** — same reason. Deferred.
-- **Niche-specific `send-form-email`** — BDD version had guardian-home and puppy-inquiry email templates. Uprise form flows different. Deferred.
+**Facebook + Instagram** (via Meta):
+1. In Supabase SQL editor, manually insert the Meta long-lived page token into `platform_credentials`:
+   ```sql
+   INSERT INTO public.platform_credentials (platform, credentials)
+   VALUES ('meta', '{"page_id": "YOUR_FB_PAGE_ID", "page_access_token": "EAAxxxx..."}')
+   ON CONFLICT (platform) DO UPDATE SET credentials = EXCLUDED.credentials;
+   ```
+2. Auto-discover the Instagram Business Account ID:
+   ```bash
+   python3 scripts/ig-autodiscover.py
+   ```
 
-When Uprise actually starts publishing automated content, these can be written from the Uprise remodeling context.
+**Google Business Profile**: use the OAuth flow (wired into admin dashboard) or run `supabase functions invoke google-oauth-callback` manually.
 
 ---
 
-## Reference
-- Skill location: `~/.claude/skills/summit-4-automate/`
-- Rule #7 (verify_jwt): the BDD outage that justifies the config.toml changes
-- Rule #16 (image-required publishing): the reason `publish-social-posts` replaces `publish-social`
-- Rule #42 (four-layer safeguard): publish_attempts + watchdog + smoke-test + predeploy-check
+## Step 9 — Smoke test end-to-end
+
+```bash
+python3 scripts/queue-test-post.py
+# Note the UUID it prints
+
+# Wait ~16 minutes for the next */15 cron fire
+
+python3 scripts/check-test-post.py <uuid>
+# Every platform should show `published`
+```
+
+If a platform shows `failed`:
+- Check `publish_attempts.error_message` for details
+- Common: Meta API 403 → token expired (run `meta-token-exchange`)
+- Common: GBP 403 → Google My Business API not enabled (enable in Cloud Console)
+
+---
+
+## ✅ Done — automation is live
+
+Once the smoke test passes, the pipeline will:
+- Generate posts from the content calendar on schedule
+- Queue them in the approval queue (email sent via notify-editor)
+- Publish approved posts to all connected platforms every 15 min
+- Watchdog alerts you if anything stalls
+- Weekly smoke test catches silent regressions
+
+---
+
+## Rollback plan (if something goes sideways)
+
+**To disable automation without deleting anything:**
+```sql
+-- Pause all crons
+SELECT cron.unschedule(jobname)
+FROM cron.job
+WHERE jobname IN (
+  'publish-social-posts', 'auto-generate-monthly-posts',
+  'publish-watchdog', 'smoke-test-socials'
+);
+```
+
+**To re-enable:** re-run `supabase/cron-jobs-MANUAL.sql`.
+
+The site itself is totally independent — it'll keep running no matter what happens with automation.
