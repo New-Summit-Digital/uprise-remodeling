@@ -230,12 +230,8 @@
             <div class="contact-form">
               <h3 style="font-family: var(--font-display); font-size: 28px; margin-bottom: 8px;">Request Your Free Estimate</h3>
               <p style="font-size: 15px; color: var(--text-muted); margin-bottom: 28px;">Tell us about your project and we'll get back to you within one business day.</p>
-              <form action="https://formsubmit.co/office@upriseremodeling.com" method="POST">
-                <!-- FormSubmit.co configuration -->
-                <input type="hidden" name="_subject" value="New Estimate Request from Uprise Website">
-                <input type="hidden" name="_next" value="https://uprise-remodeling.pages.dev/contact.html?submitted=true">
-                <input type="hidden" name="_captcha" value="true">
-                <input type="text" name="_honey" style="display:none">
+              <form action="https://uprise-remodeling-500.pages.dev/api/contact" method="POST">
+                <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
                 <div class="form-row">
                   <div class="form-group">
                     <label for="name">Full Name <span class="required">*</span></label>
